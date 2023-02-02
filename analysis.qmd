@@ -1,0 +1,30 @@
+---
+title: "State Population and County Economic Connectedness"
+author: "Your Name"
+format: html
+---
+
+What is the relationship between state population and the average county economic connectedness in a state?
+
+```{r}
+#| echo: false
+#| output: false
+#| label: set up
+
+library(tidyverse)
+
+x <- read_rds("data/ec.rds")
+```
+
+
+
+```{r}
+#| echo: false
+#| label: plotting
+x |> 
+  mutate(state = str_replace(county_name, ".*, ", "")) |> 
+  slice_sample(n = 10)
+
+```
+
+
