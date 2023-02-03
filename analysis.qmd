@@ -1,6 +1,6 @@
 ---
 title: "State Population and County Economic Connectedness"
-author: "Your Name"
+author: "Namyuktha Prakash"
 format: html
 ---
 
