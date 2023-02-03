@@ -2,29 +2,43 @@
 title: "State Population and County Economic Connectedness"
 author: "Namyuktha Prakash"
 format: html
+execute: 
+  echo: false
 ---
 
 What is the relationship between state population and the average county economic connectedness in a state?
 
 ```{r}
-#| echo: false
 #| output: false
 #| label: set up
 
 library(tidyverse)
-
 x <- read_rds("data/ec.rds")
 ```
 
 
 
 ```{r}
-#| echo: false
 #| label: plotting
 x |> 
   mutate(state = str_replace(county_name, ".*, ", "")) |> 
-  slice_sample(n = 10)
-
+  select(county_name, pop2018, ec_county, state)|>
+  drop_na()|>
+  summarise(total_pop = sum(pop2018),
+            ec = mean(ec_county),
+            .by = state)|>
+  ggplot(aes(x = total_pop,
+             y = ec ))+
+  geom_point() + 
+  geom_smooth(method = "lm", formula = y ~ x, se = FALSE)+
+  scale_x_log10(labels = scales::comma_format())+
+  labs(title = "Economic Connectedness and Population in United States",
+       subtitle ="Bigger states have counties with lower average economic connectedness",
+       x = "State Population",
+       y = "Average County Economic Connectedness",
+       caption = "Data Opportunity Insights")
+  
+ 
 ```
 
 
